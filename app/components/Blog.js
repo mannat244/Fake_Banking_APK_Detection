@@ -2,7 +2,10 @@ import React from 'react'
 
 const Blog = ({ name, details }) => {
     return (
-        <div className="flex flex-row flex-wrap justify-center gap-5 bg-gradient-to-r from-blue-50 to-blue-300 p-8">
+        <div
+            className="flex flex-row flex-wrap justify-center gap-5 from-blue-50 to-blue-300 p-8"
+            style={{ backgroundColor: '#000512' }}
+        >
             {[1, 2, 3].map((id) => (
                 <div
                     key={id}

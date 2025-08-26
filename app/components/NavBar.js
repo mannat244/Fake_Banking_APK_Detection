@@ -5,18 +5,16 @@ import Link from 'next/link';
 
 const NavBar = () => {
   return (
-    <nav className="flex items-center p-4 bg-black shadow-md">
+    <nav className="flex items-center p-4" style={{ backgroundColor: '#000512' }}>
       {/* Empty space for left (logo) */}
       <div className="flex-1"></div>
 
-      {/* Links - stay centered */}
+      
       <div className="flex gap-8 items-center flex-none">
-        <Link href="/about" className="text-white hover:text-green-400 font-medium transition duration-300">About</Link>
-        <Link href="/faq" className="text-white hover:text-green-400 font-medium transition duration-300">Faq</Link>
-        <Link href="/blogs" className="text-white hover:text-green-400 font-medium transition duration-300">Blogs</Link>
+        <Link href="/about" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">About</Link>
+        <Link href="/faq" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Faq</Link>
+        <Link href="/blogs" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Blogs</Link>
       </div>
-
-      {/* Button shifted to right */}
       <div className="flex-1 flex justify-end pr-20">
         <Link 
           href="/get-app" 

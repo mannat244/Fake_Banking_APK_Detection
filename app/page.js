@@ -8,11 +8,17 @@ export default function Home() {
   return (
     <div>
       <NavBar/>
-      <Hero/>
-      <Blog 
-        name="The Rise of Cybersecurity in the Digital Age" 
-        details="Cybersecurity is increasingly vital as digital threats evolve. Organizations must adopt robust measures to protect sensitive data and ensure safe online experiences."
-      />
+      <section id="about">
+        <Hero/>
+      </section>
+      {/* Add your FAQ section/component here if you have one */}
+      {/* <section id="faq"> <FaqComponent /> </section> */}
+      <section id="blog">
+        <Blog 
+          name="The Rise of Cybersecurity in the Digital Age" 
+          details="Cybersecurity is increasingly vital as digital threats evolve. Organizations must adopt robust measures to protect sensitive data and ensure safe online experiences."
+        />
+      </section>
     </div>
   );
 }

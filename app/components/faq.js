@@ -5,7 +5,7 @@ import Questions from './question'
 const FAQ = forwardRef((props, ref) => {
   
   return (
-    <div ref={ref} className='bg-zinc-900 p-[40px] leading-[1.6rem]  '>
+    <div ref={ref} className='bg-[#101624] p-[40px] leading-[1.6rem]  'style={{background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)"}}>
         <h1 className='text-4xl font-bold text-center  text-white p-[20px] mb-[30px]'  >Frequently Asked Questions</h1>
         <Questions ques="What is ScanWare?" answer="Cybercriminals distribute fake banking apps that look like legitimate ones. These malicious APKs steal sensitive information such as login credentials, leading to financial theft. ScanWare detects and flags such fake apps before they reach users."/>
         <Questions ques="How does the detection system work?" answer={"We use a two-step approach:\n" +

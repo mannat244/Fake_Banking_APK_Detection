@@ -34,7 +34,7 @@ const services = [
 ];
 
 const About = () => (
-  <section className="py-16 px-4">
+  <section className="py-16 px-4 " style={{background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)"}}>
     <h2 className="text-3xl font-bold text-center text-white mb-4">Service Overview</h2>
     <p className="text-center text-gray-300 mb-10">
         We safeguard your banking experience with a two-layered approach: Static Analysis for deep inspection of APK code and metadata,<br></br> and Dynamic Analysis for real-time behavior monitoring. Together, these methods ensure no fraudulent app slips through undetected.

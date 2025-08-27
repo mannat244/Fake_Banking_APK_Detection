@@ -10,8 +10,8 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-between px-16">
-      <div className="flex flex-col justify-center">
+    <div className="h-screen flex items-center justify-between px-32">
+      <div className="flex flex-col justify-center ml-16">
         <h1 className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent text-7xl font-bold mb-4 font-serif">Download safe.<br></br> Bank safe.<br></br> Stay safe.</h1>
         <p className="text-lg text-white mb-6 font-sans">
          Protect your money before it’s too late.<br></br>Our AI-powered system detects and stops fake banking apps<br></br> before they reach your phone.
@@ -34,7 +34,7 @@ const Hero = () => {
       <img
         src="/designs/hero-vector-img.png"
         alt="Hero"
-        className="w-[500px] h-auto object-contain rounded-lg"
+        className="w-[500px] h-auto object-contain rounded-lg mr-16"
       />
     </div>
   );

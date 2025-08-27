@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import Blog from "./components/Blog";
 import Hero from "./components/Hero";
 import Faq from "./components/faq";
+import About from "./components/About";
 
 
 export default function Home() {
@@ -11,6 +12,9 @@ export default function Home() {
       <NavBar/>
       <section id="about">
         <Hero/>
+      </section>
+      <section id="service">
+        <About/>
       </section>
       
       {/* Add your FAQ section/component here if you have one */}

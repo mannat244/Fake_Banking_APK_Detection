@@ -21,8 +21,8 @@ export default async function BlogPage() {
   const posts = await client.fetch(POSTS_QUERY);
 
   return (
-    <main className="container mx-auto max-w-4xl p-8">
-      <h1 className="text-4xl font-bold mb-8">Blog</h1>
+    <main className="container mx-auto p-8 bg-white">
+      <h1 className="text-4xl text-black font-bold mb-8">Blog</h1>
 
       <div className="grid gap-8 sm:grid-cols-2">
         {posts.map((post) => (
@@ -40,15 +40,15 @@ export default async function BlogPage() {
               />
             )}
             <div className="p-4">
-              <h2 className="text-2xl font-semibold mb-2">
-                <Link href={`/blog/${post.slug.current}`}>
+              <h2 className="text-2xl font-semibold mb-2 text-black">
+                <Link href={`/blog/${post.slug.current}` }>
                   {post.title}
                 </Link>
               </h2>
-              <p className="text-sm text-gray-500 mb-2">
+              <p className="text-sm text-black mb-2">
                 {post.datePosted?.slice(0, 10)}
               </p>
-              <p className="text-gray-700">{post.excerpt}</p>
+              <p className="text-gray-900">{post.excerpt}</p>
             </div>
           </article>
         ))}

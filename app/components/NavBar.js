@@ -11,9 +11,9 @@ const NavBar = () => {
 
       
       <div className="flex gap-8 items-center flex-none">
-        <Link href="/about" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">About</Link>
-        <Link href="/faq" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Faq</Link>
-        <Link href="/blogs" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Blogs</Link>
+        <a href="#about" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">About</a>
+        <a href="#faq" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Faq</a>
+        <a href="#blog" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Blogs</a>
       </div>
       <div className="flex-1 flex justify-end pr-20">
         <Link 

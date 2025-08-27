@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const NavBar = () => {
   return (
-    <nav className="flex items-center p-4" style={{ backgroundColor: '#000512' }}>
+    <nav className="fixed top-0 left-0 w-full z-50 flex items-center p-4 backdrop-blur-md bg-black/40" style={{ backgroundColor: '#00001d' }}>
       {/* Empty space for left (logo) */}
       <div className="flex-1"></div>
 

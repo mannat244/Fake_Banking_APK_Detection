@@ -23,6 +23,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${poppins.variable} ${montserrat.variable} antialiased`}
+        style={{
+    background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+    minHeight: '100vh',
+    width: '100%',
+  }}
       >
         {children}
       </body>

@@ -21,38 +21,47 @@ export default async function BlogPage() {
   const posts = await client.fetch(POSTS_QUERY);
 
   return (
-    <main className="container mx-auto p-8 bg-white">
-      <h1 className="text-4xl text-black font-bold mb-8">Blog</h1>
+<main className="container mx-auto px-6 py-12 bg-[#0A0F1F] min-h-screen">
+  <h1 className="text-4xl font-bold mb-12 text-center text-white tracking-wide">
+    Stay Ahead of Scams
+  </h1>
 
-      <div className="grid gap-8 sm:grid-cols-2">
-        {posts.map((post) => (
-          <article
-            key={post._id}
-            className="rounded-2xl shadow-md overflow-hidden border"
-          >
-            {post.coverImage && (
-              <Image
-                src={urlFor(post.coverImage).width(600).height(350).url()}
-                alt={post.title}
-                width={600}
-                height={350}
-                className="w-full object-cover"
-              />
-            )}
-            <div className="p-4">
-              <h2 className="text-2xl font-semibold mb-2 text-black">
-                <Link href={`/blog/${post.slug.current}` }>
-                  {post.title}
-                </Link>
-              </h2>
-              <p className="text-sm text-black mb-2">
-                {post.datePosted?.slice(0, 10)}
-              </p>
-              <p className="text-gray-900">{post.excerpt}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </main>
+  <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+    {posts.map((post) => (
+      <article
+        key={post._id}
+        className="flex flex-col rounded-2xl bg-[#12182B] shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-[#1E2A44] h-full"
+      >
+        {post.coverImage && (
+          <Image
+            src={urlFor(post.coverImage).width(600).height(350).url()}
+            alt={post.title}
+            width={600}
+            height={350}
+            className="w-full h-56 object-cover"
+          />
+        )}
+
+        <div className="p-6 flex flex-col flex-grow">
+          <h2 className="text-2xl font-semibold mb-3 text-white hover:text-[#3B82F6] transition-colors duration-300">
+            <Link href={`/blog/${post.slug.current}`}>
+              {post.title}
+            </Link>
+          </h2>
+          <p className="text-xs text-gray-400 mb-4">
+            {post.datePosted?.slice(0, 10)}
+          </p>
+          <p className="text-gray-300 leading-relaxed flex-grow">
+            {post.excerpt}
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+</main>
+
+
+
+
   );
 }

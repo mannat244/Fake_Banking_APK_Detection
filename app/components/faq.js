@@ -10,9 +10,9 @@ const FAQ = forwardRef((props, ref) => {
          style={{
            background: "radial-gradient(ellipse at center, #0a1428 0%, #061018 30%, #030b1a 70%, #000408 100%)"
          }}>
-      <div className='p-16 leading-[1.6rem] w-full max-w-6xl mx-auto'>
-        <h1 className='text-5xl font-bold text-center text-white p-5 mb-8'>Frequently Asked Questions</h1>
-        <div className="space-y-4">
+      <div className='py-12 sm:py-16 px-4 sm:px-8 lg:px-16 leading-[1.6rem] w-full max-w-6xl mx-auto'>
+        <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white p-4 sm:p-5 mb-6 sm:mb-8'>Frequently Asked Questions</h1>
+        <div className="space-y-3 sm:space-y-4">
           <Questions ques="What is FraudRakshak?" answer="Cybercriminals distribute fake banking apps that look like legitimate ones. These malicious APKs steal sensitive information such as login credentials, leading to financial theft. FraudRakshak detects and flags such fake apps before they reach users."/>
           <Questions ques="How does the detection system work?" answer={"We use a two-step approach:\n" +
   "1. Static Analysis: Extracts and examines APK features like package name, signatures, permissions, certificates, and embedded code.\n" +
@@ -30,5 +30,7 @@ const FAQ = forwardRef((props, ref) => {
     </div>
   )
 })
+
+FAQ.displayName = 'FAQ';
 
 export default FAQ

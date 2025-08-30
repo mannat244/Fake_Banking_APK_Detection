@@ -1,12 +1,38 @@
 'use client';
 import React, { useState } from 'react'
 
-const Hero = () => {
+const Hero = ({ onFileSelect }) => {
   const [isDragOver, setIsDragOver] = useState(false);
 
+  // Debug: Check if prop is being received
+  console.log('Hero component - onFileSelect prop:', onFileSelect);
+
   const handleFileChange = (event) => {
+    console.log('handleFileChange triggered');
     const file = event.target.files[0];
-    console.log(file);
+    console.log('Selected file:', file);
+    
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
+
+    // Validate APK file
+    if (!file.name.toLowerCase().endsWith('.apk')) {
+      console.log('Invalid file type:', file.name);
+      alert("Please upload a valid .apk file");
+      return;
+    }
+
+    console.log('Valid APK file, calling onFileSelect');
+    
+    // Call parent function to switch to scanner
+    if (onFileSelect) {
+      console.log('Calling onFileSelect with file:', file);
+      onFileSelect(file);
+    } else {
+      console.error('onFileSelect prop is not available!');
+    }
   };
 
   const handleDragOver = (e) => {
@@ -20,11 +46,32 @@ const Hero = () => {
   };
 
   const handleDrop = (e) => {
+    console.log('handleDrop triggered');
     e.preventDefault();
     setIsDragOver(false);
     const files = e.dataTransfer.files;
-    if (files.length > 0 && files[0].name.endsWith('.apk')) {
-      console.log(files[0]);
+    console.log('Dropped files:', files);
+    
+    if (files.length > 0) {
+      const file = files[0];
+      console.log('First dropped file:', file);
+      
+      // Validate APK file
+      if (!file.name.toLowerCase().endsWith('.apk')) {
+        console.log('Invalid dropped file type:', file.name);
+        alert('Please upload a valid APK file');
+        return;
+      }
+      
+      console.log('Valid dropped APK file, calling onFileSelect');
+      
+      // Call parent function to switch to scanner
+      if (onFileSelect) {
+        console.log('Calling onFileSelect with dropped file:', file);
+        onFileSelect(file);
+      } else {
+        console.error('onFileSelect prop is not available for drop!');
+      }
     }
   };
 
@@ -36,11 +83,11 @@ const Hero = () => {
       
       <div className="flex flex-col justify-center w-full lg:w-1/2 lg:ml-16 mt-16 lg:mt-20 mb-8 lg:mb-0">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 font-serif text-center lg:text-left">
-          <span className="text-white">Stopping fraud</span><br></br>
+          <span className="text-white">Stopping fraud</span><br />
           <span className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent">Securing trust.</span>
         </h1>
         <p className="text-base sm:text-lg text-white mb-6 font-sans text-center lg:text-left max-w-2xl lg:max-w-none">
-         Protect your money before it's too late.<br></br>Our AI-powered system detects and stops fake banking apps<br></br> before they reach your phone.
+         Protect your money before it's too late.<br />Our AI-powered system detects and stops fake banking apps<br /> before they reach your phone.
         </p>
         
         <div 

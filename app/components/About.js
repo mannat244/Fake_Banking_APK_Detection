@@ -62,7 +62,7 @@ const About = () => (
            style={{
              background: "radial-gradient(ellipse at center, #0a1428 0%, #061018 30%, #030b1a 70%, #000408 100%)"
            }}>
-    <h2 className="text-3xl font-bold text-center text-white mb-4">Service Overview</h2>
+    <h2 className="text-5xl font-bold text-white mb-6 text-center">Service Overview</h2>
     <p className="text-center text-gray-300 mb-10">
         Double-layered protection that outsmarts even the smartest fake apps.
     </p>

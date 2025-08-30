@@ -11,7 +11,7 @@ const FAQ = forwardRef((props, ref) => {
            background: "radial-gradient(ellipse at center, #0a1428 0%, #061018 30%, #030b1a 70%, #000408 100%)"
          }}>
       <div className='p-16 leading-[1.6rem] w-full max-w-6xl mx-auto'>
-        <h1 className='text-4xl font-bold text-center text-white p-5 mb-8'>Frequently Asked Questions</h1>
+        <h1 className='text-5xl font-bold text-center text-white p-5 mb-8'>Frequently Asked Questions</h1>
         <div className="space-y-4">
           <Questions ques="What is ScanWare?" answer="Cybercriminals distribute fake banking apps that look like legitimate ones. These malicious APKs steal sensitive information such as login credentials, leading to financial theft. ScanWare detects and flags such fake apps before they reach users."/>
           <Questions ques="How does the detection system work?" answer={"We use a two-step approach:\n" +

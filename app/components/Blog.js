@@ -65,7 +65,7 @@ const BlogArticles = async () => {
         <h1 className="text-5xl font-bold text-white mb-6">
           The Rakshak Reports
         </h1>
-        <p className="text-gray-300 text-lg max-w-4xl mx-auto leading-relaxed">
+        <p className="text-center text-gray-300 mb-10">
           Fraud never sleeps — and neither does Rakshak. Arm yourself with our blogs.
           <br />
           Latest fraud trends, defense strategies, and trusted security insights.

@@ -33,22 +33,23 @@ const Hero = () => {
          style={{
            background: "radial-gradient(ellipse at center, #0a1428 0%, #061018 30%, #030b1a 70%, #000408 100%)"
          }}>
-      <div className="flex flex-col justify-center ml-16">
+      <div className="flex flex-col justify-center ml-16 mt-20">
         <h1 className="text-7xl font-bold mb-4 font-serif">
-          <span className="text-white">Download safe.</span><br></br>
-          <span className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent">Bank safe.<br></br> Stay safe.</span>
+          <span className="text-white">Stopping fraud</span><br></br>
+          <span className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent">Securing trust.</span>
         </h1>
         <p className="text-lg text-white mb-6 font-sans">
          Protect your money before it's too late.<br></br>Our AI-powered system detects and stops fake banking apps<br></br> before they reach your phone.
         </p>
         
-        {/* Drag and Drop Upload Area - Adjusted padding and button styling */}
+        
         <div 
           className={`relative border-2 border-dashed rounded-2xl py-2 px-8 w-[450px] flex items-center justify-center transition-all duration-300 ${
             isDragOver 
               ? 'border-cyan-400 bg-cyan-500/10' 
               : 'border-gray-500 hover:border-cyan-500'
           }`}
+          style={{ marginTop: '2.5rem' }} // <-- Increased top margin for more distance
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}

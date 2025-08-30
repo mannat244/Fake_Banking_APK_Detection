@@ -10,10 +10,10 @@ export default function Home() {
   return (
     <div>
       <NavBar/>
-      <section id="about">
+      <section id="home">
         <Hero/>
       </section>
-      <section id="service">
+      <section id="about">
         <About/>
       </section>
       

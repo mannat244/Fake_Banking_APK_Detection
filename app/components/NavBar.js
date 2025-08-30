@@ -1,31 +1,19 @@
 "use client";
 
 import React from 'react'
-import Link from 'next/link';
 
 const NavBar = () => {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 flex items-center p-4 backdrop-blur-md bg-black/40" style={{ backgroundColor: '#00001d' }}>
-      {/* Empty space for left (logo) */}
-      <div className="flex-1"></div>
-
+    <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-center p-4 backdrop-blur-md" 
+         style={{ 
+           background: "rgba(6, 16, 24, 0.95)",
+           borderBottom: "1px solid rgba(14, 27, 46, 0.3)"
+         }}>
       
-      <div className="flex gap-8 items-center flex-none">
+      <div className="flex gap-8 items-center">
         <a href="#about" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">About</a>
         <a href="#faq" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Faq</a>
         <a href="#blog" className="text-white hover:text-[#47a4d7] font-medium transition duration-300">Blogs</a>
-      </div>
-      <div className="flex-1 flex justify-end pr-20 mr-30">
-        <Link 
-          href="/get-app" 
-          className="relative inline-block px-6 py-2 font-semibold text-white rounded-full overflow-hidden group"
-        >
-          {/* animated gradient border */}
-          <span className="absolute inset-0 rounded-full p-[2px] bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 animate-borderLight bg-[length:200%_200%]"></span>
-          {/* inner background */}
-          <span className="absolute inset-[2px] bg-black rounded-full"></span>
-          <span className="relative z-10 ">Get App</span>
-        </Link>
       </div>
     </nav>
   )

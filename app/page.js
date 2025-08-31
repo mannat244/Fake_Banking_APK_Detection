@@ -5,7 +5,7 @@ import Blog from "./components/Blog";
 import Hero from "./components/Hero";
 import Faq from "./components/faq";
 import About from "./components/About";
-import APKScanner from "./components/APKScanner";
+
 
 export default function Home() {
   

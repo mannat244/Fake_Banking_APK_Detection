@@ -1,38 +1,38 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { Upload } from 'lucide-react';
+import { Bounce, toast} from 'react-toastify';
 
-const Hero = ({ onFileSelect }) => {
+
+const successUpload = () => {
+  toast.success('Apk Uploaded succesfully!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    transition: Bounce,
+    });
+}
+
+const Hero = () => {
+
   const [isDragOver, setIsDragOver] = useState(false);
-
-  // Debug: Check if prop is being received
-  console.log('Hero component - onFileSelect prop:', onFileSelect);
+  const [file, setFile] = useState(null);
+  const [scanId, setScanId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
-    console.log('handleFileChange triggered');
-    const file = event.target.files[0];
-    console.log('Selected file:', file);
-    
-    if (!file) {
-      console.log('No file selected');
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) return;
+    if (!selectedFile.name.toLowerCase().endsWith('.apk')) {
+      alert('Please upload a valid .apk file');
       return;
     }
-
-    // Validate APK file
-    if (!file.name.toLowerCase().endsWith('.apk')) {
-      console.log('Invalid file type:', file.name);
-      alert("Please upload a valid .apk file");
-      return;
-    }
-
-    console.log('Valid APK file, calling onFileSelect');
-    
-    // Call parent function to switch to scanner
-    if (onFileSelect) {
-      console.log('Calling onFileSelect with file:', file);
-      onFileSelect(file);
-    } else {
-      console.error('onFileSelect prop is not available!');
-    }
+    setFile(selectedFile);
   };
 
   const handleDragOver = (e) => {
@@ -46,41 +46,48 @@ const Hero = ({ onFileSelect }) => {
   };
 
   const handleDrop = (e) => {
-    console.log('handleDrop triggered');
     e.preventDefault();
     setIsDragOver(false);
-    const files = e.dataTransfer.files;
-    console.log('Dropped files:', files);
+    const droppedFile = e.dataTransfer.files[0];
+    if (!droppedFile) return;
+    if (!droppedFile.name.toLowerCase().endsWith('.apk')) {
+      alert('Please upload a valid APK file');
+      return;
+    }
+    setFile(droppedFile);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return alert('No file selected');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      setLoading(true);
+      const res = await fetch(
+        'https://fraudrakshakapi.onrender.com/upload_apk/',
+        { method: 'POST', body: formData }
+      );
+      const data = await res.json();
+      setScanId(data.scan_id);
+      successUpload()
+    localStorage.setItem('scan_id', data.scan_id);
+    setTimeout(() => {
+      window.location.href = `/scan?scanId=${data.scan_id}`;
+    }, 1000);
     
-    if (files.length > 0) {
-      const file = files[0];
-      console.log('First dropped file:', file);
-      
-      // Validate APK file
-      if (!file.name.toLowerCase().endsWith('.apk')) {
-        console.log('Invalid dropped file type:', file.name);
-        alert('Please upload a valid APK file');
-        return;
-      }
-      
-      console.log('Valid dropped APK file, calling onFileSelect');
-      
-      // Call parent function to switch to scanner
-      if (onFileSelect) {
-        console.log('Calling onFileSelect with dropped file:', file);
-        onFileSelect(file);
-      } else {
-        console.error('onFileSelect prop is not available for drop!');
-      }
+    } catch (err) {
+      console.error(err);
+      alert('Error uploading file');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 lg:px-32 py-8 lg:py-0" 
-         style={{
-           background: "radial-gradient(ellipse at center, #0a1428 0%, #061018 30%, #030b1a 70%, #000408 100%)"
-         }}>
-      
+         style={{ background: 'radial-gradient(ellipse at center, #0a1428 0%, #061018 30%, #030b1a 70%, #000408 100%)' }}>
       <div className="flex flex-col justify-center w-full lg:w-1/2 lg:ml-16 mt-16 lg:mt-20 mb-8 lg:mb-0">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 font-serif text-center lg:text-left">
           <span className="text-white">Stopping fraud</span><br />
@@ -89,27 +96,19 @@ const Hero = ({ onFileSelect }) => {
         <p className="text-base sm:text-lg text-white mb-6 font-sans text-center lg:text-left max-w-2xl lg:max-w-none">
          Protect your money before it's too late.<br />Our AI-powered system detects and stops fake banking apps<br /> before they reach your phone.
         </p>
-        
         <div 
-          className={`relative border-2 border-dashed rounded-2xl py-4 sm:py-6 lg:py-2 px-4 sm:px-8 w-full max-w-md lg:max-w-[450px] flex items-center justify-center transition-all duration-300 mx-auto lg:mx-0 ${
-            isDragOver 
-              ? 'border-cyan-400 bg-cyan-500/10' 
-              : 'border-gray-500 hover:border-cyan-500'
+          className={`relative border-2 border-dashed rounded-2xl py-4 sm:py-6 lg:py-2 px-4 sm:px-8 w-full max-w-md lg:max-w-[450px] flex flex-col items-center justify-center transition-all duration-300 mx-auto lg:mx-0 ${
+            isDragOver ? 'border-cyan-400 bg-cyan-500/10' : 'border-gray-500 hover:border-cyan-500'
           }`}
           style={{ marginTop: '2.5rem' }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <div className="text-center">
-            <div className="mb-4">
-              <svg className="w-10 sm:w-12 h-10 sm:h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-              </svg>
-            </div>
+          <div className="text-center mb-4">
+            <Upload className="w-10 h-10 mx-auto text-gray-400" />
             <p className="text-white text-sm sm:text-base mb-3">Drag and drop your APK file here</p>
             <p className="text-gray-400 text-xs sm:text-sm mb-4">or</p>
-            
             <input
               type="file"
               className="hidden"
@@ -122,16 +121,31 @@ const Hero = ({ onFileSelect }) => {
               className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs sm:text-sm font-medium text-white rounded-lg group bg-gradient-to-br from-cyan-400 to-blue-900 hover:from-cyan-300 hover:to-blue-800 focus:ring-4 focus:outline-none focus:ring-cyan-800 cursor-pointer transition-all duration-300"
             >
               <span className="relative flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 transition-all ease-in duration-300 bg-gray-900 rounded-md group-hover:bg-transparent">
-                <svg className="w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5m0 0l5 5m-5-5v12" />
-                </svg>
-                Upload APK
+                <Upload className="w-3 sm:w-4 h-3 sm:h-4" /> Upload APK
               </span>
             </label>
           </div>
+
+          {file && (
+            <div className="w-full flex flex-col items-center">
+              <p className="text-gray-200 text-sm mb-2">Selected file: {file.name}</p>
+              <button
+                onClick={handleUpload}
+                disabled={loading}
+                className="w-full py-2 px-4 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600"
+              >
+                {loading ? 'Uploading...' : 'Upload'}
+              </button>
+            </div>
+          )}
+
+          {scanId && (
+            <div className="mt-4 p-3 bg-green-100 rounded-lg text-green-800">
+              ✅ Upload successful! Scan ID: <strong>{scanId}</strong>
+            </div>
+          )}
         </div>
       </div>
-      
       <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:mr-16">
         <img
           src="/designs/hero-vector-img.png"

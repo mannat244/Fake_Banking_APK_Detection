@@ -101,31 +101,160 @@ const page = () => {
         <span className="text-white">APK</span>
         <span className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent"> Security Analysis</span>
       </h1>
-      <h1 className="text-2xl mb-4">Scan ID: <span className="text-cyan-400">{scanID}</span></h1>
+      <h1 className="text-1xl mb-4 font-bold text-white">Scan ID: <span className="text-cyan-400">{scanID}</span></h1>
+      {/* Summary Cards */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  {/* Metadata Summary Card */}
+  {metadata && (
+    <div className="bg-gray-800/50 backdrop-blur-lg border border-cyan-400/20 rounded-xl p-4">
+      <div className="flex items-center gap-3 mb-3">
+        {metadata?.score >= 90 ? (
+          <CheckCircle className="w-6 h-6 text-green-400" />
+        ) : metadata?.score >= 70 ? (
+          <Shield className="w-6 h-6 text-yellow-400" />
+        ) : metadata?.score >= 50 ? (
+          <AlertTriangle className="w-6 h-6 text-orange-400" />
+        ) : (
+          <XCircle className="w-6 h-6 text-red-400" />
+        )}
+        <h3 className="font-semibold text-white">Metadata Check</h3>
+      </div>
+      <div className="space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="text-gray-400 text-sm">Play Store:</span>
+          <span className={`text-sm font-semibold ${
+            metadata.play_store_match?.error ? 'text-red-400' : 'text-green-400'
+          }`}>
+            {metadata.play_store_match?.error ? 'Not Found' : 'Found'}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-400 text-sm">Score:</span>
+          <span className={`text-sm font-bold ${
+            metadata.score >= 90 ? 'text-green-400' :
+            metadata.score >= 70 ? 'text-yellow-400' :
+            metadata.score >= 50 ? 'text-orange-400' :
+            'text-red-400'
+          }`}>
+            {metadata.score}/100
+          </span>
+        </div>
+      </div>
+    </div>
+  )}
 
+  {/* Signature Summary Card */}
+  {signature && (
+    <div className="bg-gray-800/50 backdrop-blur-lg border border-cyan-400/20 rounded-xl p-4">
+      <div className="flex items-center gap-3 mb-3">
+        {signature?.score >= 90 ? (
+          <CheckCircle className="w-6 h-6 text-green-400" />
+        ) : signature?.score >= 70 ? (
+          <Shield className="w-6 h-6 text-yellow-400" />
+        ) : signature?.score >= 50 ? (
+          <AlertTriangle className="w-6 h-6 text-orange-400" />
+        ) : (
+          <XCircle className="w-6 h-6 text-red-400" />
+        )}
+        <h3 className="font-semibold text-white">Signature Check</h3>
+      </div>
+      <div className="space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="text-gray-400 text-sm">DB Match:</span>
+          <span className={`text-sm font-semibold ${
+            signature?.signature_match ? 'text-green-400' : 'text-red-400'
+          }`}>
+            {signature?.signature_match ? 'Matched' : 'No Match'}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-400 text-sm">Score:</span>
+          <span className={`text-sm font-bold ${
+            signature.score >= 90 ? 'text-green-400' :
+            signature.score >= 70 ? 'text-yellow-400' :
+            signature.score >= 50 ? 'text-orange-400' :
+            'text-red-400'
+          }`}>
+            {signature.score}/100
+          </span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* Deep Scan Summary Card */}
+  {deepScanResult && (
+    <div className="bg-gray-800/50 backdrop-blur-lg border border-cyan-400/20 rounded-xl p-4">
+      <div className="flex items-center gap-3 mb-3">
+        {deepScanResult?.suspicious_findings?.length > 0 ? (
+          <XCircle className="w-6 h-6 text-red-400" />
+        ) : deepScanResult?.suspicious_findings?.length === 0 ? (
+          <CheckCircle className="w-6 h-6 text-green-400" />
+        ) : (
+          <Shield className="w-6 h-6 text-cyan-400" />
+        )}
+        <h3 className="font-semibold text-white">Deep Scan</h3>
+      </div>
+      <div className="space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="text-gray-400 text-sm">Files Scanned:</span>
+          <span className="text-white text-sm font-semibold">
+            {deepScanResult.scan_summary?.total_files_scanned || 'N/A'}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-400 text-sm">Suspicious Perms:</span>
+          <span className={`text-sm font-semibold ${
+            deepScanResult.inventory?.all_permissions_found?.filter(perm => 
+              perm.includes('CAMERA') || perm.includes('MICROPHONE') || 
+              perm.includes('LOCATION') || perm.includes('SMS') || 
+              perm.includes('CALL') || perm.includes('CONTACTS') || 
+              perm.includes('STORAGE') || perm.includes('ADMIN') || 
+              perm.includes('SYSTEM') || perm.includes('ROOT')
+            ).length > 0 ? 'text-yellow-400' : 'text-green-400'
+          }`}>
+            {deepScanResult.inventory?.all_permissions_found?.filter(perm => 
+              perm.includes('CAMERA') || perm.includes('MICROPHONE') || 
+              perm.includes('LOCATION') || perm.includes('SMS') || 
+              perm.includes('CALL') || perm.includes('CONTACTS') || 
+              perm.includes('STORAGE') || perm.includes('ADMIN') || 
+              perm.includes('SYSTEM') || perm.includes('ROOT')
+            ).length || 0}
+          </span>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
       {/* Metadata Accordion */}
-      <div className="bg-gray-900/50 backdrop-blur-lg border border-cyan-400/20 rounded-2xl overflow-hidden mb-4">
+<div className="bg-gray-900/50 backdrop-blur-lg border border-cyan-400/20 rounded-2xl overflow-hidden mb-4">
   <button 
     className="w-full px-6 py-4 text-left hover:bg-gray-800/30 flex justify-between items-center transition-colors duration-200"
     onClick={() => setOpenAccordion(prev => ({ ...prev, metadata: !prev.metadata }))}
   >
     <div className="flex items-center gap-4">
-      {metadata?.score >= 90 ? (
+      {loadingMetadata ? (
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-400"></div>
+      ) : metadata?.score >= 90 ? (
         <CheckCircle className="w-6 h-6 text-green-400" />
       ) : metadata?.score >= 70 ? (
         <Shield className="w-6 h-6 text-yellow-400" />
       ) : metadata?.score >= 50 ? (
         <AlertTriangle className="w-6 h-6 text-orange-400" />
-      ) : (
+      ) : metadata ? (
         <XCircle className="w-6 h-6 text-red-400" />
+      ) : (
+        <Shield className="w-6 h-6 text-gray-400" />
       )}
       <div>
         <span className="font-semibold text-white text-lg">Metadata Analysis</span>
-        <p className="text-sm text-gray-400">APK metadata and Play Store verification</p>
+        <p className="text-sm text-gray-400">
+          {loadingMetadata ? 'Analyzing metadata...' : 'APK metadata and Play Store verification'}
+        </p>
       </div>
     </div>
     <div className="flex items-center gap-4">
-      {metadata?.score && (
+      {metadata?.score && !loadingMetadata && (
         <div className={`px-3 py-1 rounded-full border font-bold text-sm ${
           metadata.score >= 90 ? 'text-green-400 bg-green-400/20 border-green-400' :
           metadata.score >= 70 ? 'text-yellow-400 bg-yellow-400/20 border-yellow-400' :
@@ -271,11 +400,11 @@ const page = () => {
           </div>
 
           {/* Analysis Reasons */}
-          {metadata.result?.reasons?.length > 0 && (
+          {metadata?.reasons?.length > 0 && (
             <div className="bg-gray-800/50 rounded-lg p-4">
               <h4 className="text-lg font-semibold text-cyan-400 mb-4">Analysis Details</h4>
               <div className="space-y-2">
-                {metadata.result.reasons.map((reason, idx) => (
+                {metadata.reasons.map((reason, idx) => (
                   <div key={idx} className={`p-3 rounded-lg text-sm ${
                     reason.includes('✅') ? 'bg-green-900/30 border border-green-400/30 text-green-300' :
                     reason.includes('❌') ? 'bg-red-900/30 border border-red-400/30 text-red-300' :
@@ -289,52 +418,52 @@ const page = () => {
           )}
 
           {/* Security Score */}
-          {metadata.result?.score && (
+          {metadata.score && (
             <div className="bg-gray-800/50 rounded-lg p-4">
               <h4 className="text-lg font-semibold text-cyan-400 mb-4">Security Score Analysis</h4>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-gray-300">Overall Security Score:</span>
                 <div className="flex items-center gap-3">
-                  {metadata.result.score >= 90 ? (
+                  {metadata.score >= 90 ? (
                     <CheckCircle className="w-6 h-6 text-green-400" />
-                  ) : metadata.result.score >= 70 ? (
+                  ) : metadata.score >= 70 ? (
                     <Shield className="w-6 h-6 text-yellow-400" />
-                  ) : metadata.result.score >= 50 ? (
+                  ) : metadata.score >= 50 ? (
                     <AlertTriangle className="w-6 h-6 text-orange-400" />
                   ) : (
                     <XCircle className="w-6 h-6 text-red-400" />
                   )}
                   <span className={`text-2xl font-bold ${
-                    metadata.result.score >= 90 ? 'text-green-400' :
-                    metadata.result.score >= 70 ? 'text-yellow-400' :
-                    metadata.result.score >= 50 ? 'text-orange-400' :
+                    metadata.score >= 90 ? 'text-green-400' :
+                    metadata.score >= 70 ? 'text-yellow-400' :
+                    metadata.score >= 50 ? 'text-orange-400' :
                     'text-red-400'
                   }`}>
-                    {metadata.result.score}/100
+                    {metadata.score}/100
                   </span>
                 </div>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-3 mb-3">
                 <div 
                   className={`h-3 rounded-full transition-all duration-500 ${
-                    metadata.result.score >= 90 ? 'bg-gradient-to-r from-green-500 to-green-400' :
-                    metadata.result.score >= 70 ? 'bg-gradient-to-r from-yellow-500 to-yellow-400' :
-                    metadata.result.score >= 50 ? 'bg-gradient-to-r from-orange-500 to-orange-400' :
+                    metadata.score >= 90 ? 'bg-gradient-to-r from-green-500 to-green-400' :
+                    metadata.score >= 70 ? 'bg-gradient-to-r from-yellow-500 to-yellow-400' :
+                    metadata.score >= 50 ? 'bg-gradient-to-r from-orange-500 to-orange-400' :
                     'bg-gradient-to-r from-red-500 to-red-400'
                   }`}
-                  style={{ width: `${metadata.result.score}%` }}
+                  style={{ width: `${metadata.score}%` }}
                 ></div>
               </div>
               <div className="grid grid-cols-4 text-xs text-gray-400 text-center">
-                <span>Critical</span>
+                <span>Critical</span> 
                 <span>Low</span>
                 <span>Medium</span>
                 <span>Safe</span>
               </div>
               <p className="text-sm text-gray-300 mt-3">
-                {metadata.result.score >= 90 ? 'This APK appears to be authentic and safe to install.' :
-                 metadata.result.score >= 70 ? 'This APK has minor concerns but is generally safe.' :
-                 metadata.result.score >= 50 ? 'This APK has several red flags. Install with caution.' :
+                {metadata.score >= 90 ? 'This APK appears to be authentic and safe to install.' :
+                 metadata.score >= 70 ? 'This APK has minor concerns but is generally safe.' :
+                 metadata.score >= 50 ? 'This APK has several red flags. Install with caution.' :
                  'This APK is highly suspicious and should not be installed.'}
               </p>
             </div>
@@ -346,29 +475,37 @@ const page = () => {
 </div>
 
 
-      {/* Signature Accordion */}
+      
+
+{/* Signature Accordion */}
 <div className="bg-gray-900/50 backdrop-blur-lg border border-cyan-400/20 rounded-2xl overflow-hidden mb-4">
   <button 
     className="w-full px-6 py-4 text-left hover:bg-gray-800/30 flex justify-between items-center transition-colors duration-200"
     onClick={() => setOpenAccordion(prev => ({ ...prev, signature: !prev.signature }))}
   >
     <div className="flex items-center gap-4">
-      {signature?.score >= 90 ? (
+      {loadingSignature ? (
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-400"></div>
+      ) : signature?.score >= 90 ? (
         <CheckCircle className="w-6 h-6 text-green-400" />
       ) : signature?.score >= 70 ? (
         <Shield className="w-6 h-6 text-yellow-400" />
       ) : signature?.score >= 50 ? (
         <AlertTriangle className="w-6 h-6 text-orange-400" />
-      ) : (
+      ) : signature ? (
         <XCircle className="w-6 h-6 text-red-400" />
+      ) : (
+        <Shield className="w-6 h-6 text-gray-400" />
       )}
       <div>
         <span className="font-semibold text-white text-lg">Signature Analysis</span>
-        <p className="text-sm text-gray-400">APK signature verification and certificate validation</p>
+        <p className="text-sm text-gray-400">
+          {loadingSignature ? 'Verifying signatures...' : 'APK signature verification and certificate validation'}
+        </p>
       </div>
     </div>
     <div className="flex items-center gap-4">
-      {signature?.score && (
+      {signature?.score && !loadingSignature && (
         <div className={`px-3 py-1 rounded-full border font-bold text-sm ${
           signature.score >= 90 ? 'text-green-400 bg-green-400/20 border-green-400' :
           signature.score >= 70 ? 'text-yellow-400 bg-yellow-400/20 border-yellow-400' :
@@ -414,18 +551,17 @@ const page = () => {
             </span>
           </div>
 
-          {/* App Details */}
           <div className="bg-gray-800/50 rounded-lg p-4">
             <h4 className="text-lg font-semibold text-cyan-400 mb-4">App Information</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="flex justify-between py-2 border-b border-gray-600/30">
                 <span className="text-gray-400 font-medium">Package Name:</span>
-                <span className="text-white font-mono text-right">{signature?.app_details?.package_name || 'N/A'}</span>
+                <span className="text-white font-mono text-right">{signature?.app_details?.package_name??'N/A'}</span>
               </div>
               {signature?.app_details?.app_name && (
                 <div className="flex justify-between py-2 border-b border-gray-600/30">
                   <span className="text-gray-400 font-medium">App Name:</span>
-                  <span className="text-white text-right">{signature.app_details.app_name}</span>
+                  <span className="text-white text-right">{signature.app_details?.app_name ?? 'N/A'}</span>
                 </div>
               )}
             </div>
@@ -448,6 +584,25 @@ const page = () => {
                 </span>
               </div>
             </div>
+            
+            {/* Extracted Signature Display */}
+            {signature?.extracted_signatures?.length > 0 && (
+              <div className="mt-4">
+                <span className="text-gray-400 font-medium text-sm">Extracted Signature:</span>
+                <div className="mt-2 p-3 bg-gray-700/50 rounded font-mono text-xs text-gray-300 break-all">
+                  {signature.extracted_signatures[0]}
+                </div>
+              </div>
+            )}
+            
+            {signature?.trusted_signatures?.length > 0 && (
+              <div className="mt-4">
+                <span className="text-gray-400 font-medium text-sm">Trusted Signature:</span>
+                <div className="mt-2 p-3 bg-gray-700/50 rounded font-mono text-xs text-gray-300 break-all">
+                  {signature.trusted_signatures[0]}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Analysis Reasons */}
@@ -532,7 +687,9 @@ const page = () => {
    onClick={() => setOpenAccordion(prev => ({ ...prev, deepScan: !prev.deepScan }))}
  >
    <div className="flex items-center gap-4">
-     {deepScanResult?.suspicious_findings?.length > 0 ? (
+     {deepScanStatus && deepScanStatus !== 'completed' ? (
+       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-400"></div>
+     ) : deepScanResult?.suspicious_findings?.length > 0 ? (
        <XCircle className="w-6 h-6 text-red-400" />
      ) : deepScanResult?.suspicious_findings?.length === 0 ? (
        <CheckCircle className="w-6 h-6 text-green-400" />
@@ -541,7 +698,12 @@ const page = () => {
      )}
      <div>
        <span className="font-semibold text-white text-lg">Deep Scan Analysis</span>
-       <p className="text-sm text-gray-400">Comprehensive APK file and permission analysis</p>
+       <p className="text-sm text-gray-400">
+         {deepScanStatus && deepScanStatus !== 'completed' ? 
+           'Scanning in progress...' : 
+           'Comprehensive APK file and permission analysis'
+         }
+       </p>
      </div>
    </div>
    <div className="flex items-center gap-4">
@@ -565,10 +727,10 @@ const page = () => {
        </div>
      )}
      
-     {deepScanStatus && (
+     {deepScanStatus && deepScanStatus !== 'completed' && (
        <div className="bg-cyan-900/30 border border-cyan-400/30 rounded-lg p-4 mb-6">
          <div className="flex items-center gap-2">
-           <Shield className="w-5 h-5 text-cyan-400" />
+           <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-cyan-400"></div>
            <span className="text-cyan-400 font-semibold">Scan Status</span>
          </div>
          <p className="text-cyan-300 mt-2">{deepScanStatus}</p>

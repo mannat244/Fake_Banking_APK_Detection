@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function DynamicAnalysisPage() {
+function DynamicAnalysisPage() {
   const searchParams = useSearchParams();
   const scanId = searchParams.get("scanId");
 
@@ -418,3 +418,16 @@ export default function DynamicAnalysisPage() {
     </div>
   );
 }
+
+
+const Page = () => {
+  return (
+    <div>
+      <Suspense>
+        <DynamicAnalysisPage/>
+      </Suspense>
+    </div>
+  )
+}
+
+export default Page

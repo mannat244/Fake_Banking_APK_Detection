@@ -94,7 +94,7 @@ const Hero = () => {
           <span className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent">Securing trust.</span>
         </h1>
         <p className="text-base sm:text-lg text-white mb-6 font-sans text-center lg:text-left max-w-2xl lg:max-w-none">
-         Protect your money before it's too late.<br />Our AI-powered system detects and stops fake banking apps<br /> before they reach your phone.
+         Protect your money before it&apos;s too late.<br />Our AI-powered system detects and stops fake banking apps<br /> before they reach your phone.
         </p>
         <div 
           className={`relative border-2 border-dashed rounded-2xl py-4 sm:py-6 lg:py-2 px-4 sm:px-8 w-full max-w-md lg:max-w-[450px] flex flex-col items-center justify-center transition-all duration-300 mx-auto lg:mx-0 ${

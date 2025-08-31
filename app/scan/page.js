@@ -1,9 +1,9 @@
 'use client';
 import { XCircle , AlertTriangle, Shield, CheckCircle } from "lucide-react"; 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-const page = () => {
+const Scan = () => {
   const searchParams = useSearchParams();
   const [scanID, setScanID] = useState("");
   const [BaseURL] = useState("https://fraudrakshakapi.onrender.com");
@@ -116,8 +116,8 @@ const page = () => {
   {/* Start Dynamic Analysis Button */}
   
   <button onClick={handleDynamicAnalysis}
-  class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+  className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
   Start Dynamic Analysis
     </span>
 </button>
@@ -938,4 +938,18 @@ const page = () => {
   );
 };
 
-export default page;
+
+const Page = () => {
+  return (
+    <div>
+      <Suspense>
+        <Scan/>
+      </Suspense>
+    </div>
+  )
+}
+
+
+
+
+export default Page;

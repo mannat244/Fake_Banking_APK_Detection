@@ -34,6 +34,12 @@ const page = () => {
     }
   }, []);
 
+  const handleDynamicAnalysis = () => {
+    if (scanID) {
+      window.location.href = `/dynamic?scanId=${encodeURIComponent(scanID)}`;
+    }
+  }
+
   const fetchMetadata = async (id) => {
     setLoadingMetadata(true);
     setMetadataError(null);
@@ -101,7 +107,21 @@ const page = () => {
         <span className="text-white">APK</span>
         <span className="bg-gradient-to-tl from-slate-800 via-cyan-500 to-zinc-400 bg-clip-text text-transparent"> Security Analysis</span>
       </h1>
-      <h1 className="text-1xl mb-4 font-bold text-white">Scan ID: <span className="text-cyan-400">{scanID}</span></h1>
+      <div className="flex justify-between items-center mb-4">
+  {/* Scan ID */}
+  <h1 className="text-1xl font-bold text-white">
+    Scan ID: <span className="text-cyan-400">{scanID}</span>
+  </h1>
+
+  {/* Start Dynamic Analysis Button */}
+  <button
+    onClick={handleDynamicAnalysis} // <-- attach your function here
+    className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-xl shadow-lg transition"
+  >
+    Start Dynamic Analysis
+  </button>
+</div>
+
       {/* Summary Cards */}
 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
   {/* Metadata Summary Card */}

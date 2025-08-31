@@ -143,6 +143,7 @@ const Hero = () => {
             <div className="mt-4 p-3 bg-green-100 rounded-lg text-green-800">
               ✅ Upload successful! Scan ID: <strong>{scanId}</strong>
             </div>
+            
           )}
         </div>
       </div>
